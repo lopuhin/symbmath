@@ -40,10 +40,9 @@ public:
   }
 
   static Tree* copy(Tree* tree) {
-    // copy tree
-    // TODO
+    // copy whole tree in memory
     char* new_x = new char[strlen(tree->x) + 1];
-    strcpy(tree->x, new_x);
+    strcpy(new_x, tree->x);
     if (tree->left && tree->right)
       return new Tree(Tree::copy(tree->left), new_x, Tree::copy(tree->right));
     else
