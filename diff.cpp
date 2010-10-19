@@ -3,25 +3,32 @@
 using namespace std;
 
 
-Tree* get_diff(Tree* expr, char* x) {
-  // Differentiate expression (create new expression) by given x
+Tree* get_diff(Tree* expr, char* var) {
+  // Differentiate expression (create new expression) by given var
+
+  // TODO recognize constant expressions!
   if (expr->left && expr->right) {
-    if (!strcmp(expr->x, "+"))
-      return new Tree(get_diff(expr->left, x), "+", get_diff(expr->right, x));
-    if (!strcmp(expr->x, "*"))
-      return new Tree(new Tree(get_diff(expr->left, x), "*", Tree::copy(expr->right)),
-		      "+", new Tree(Tree::copy(expr->left), "*", get_diff(expr->right, x)));
-    // TODO - more functions "/" "sin" "cos" "^"
-    // TODO recognize constants?
+    if (!strcmp(expr->x, "+")) // (a + b)' = a' + b'
+      return new Tree(get_diff(expr->left, var), "+", get_diff(expr->right, var));
+    if (!strcmp(expr->x, "*")) // (a * b)' = a' * b + a * b'
+      return new Tree(new Tree(get_diff(expr->left, var),
+			       "*", Tree::copy(expr->right)),
+		      "+", new Tree(Tree::copy(expr->left),
+				    "*", get_diff(expr->right, var)));
+    // TODO  "/" "^"
+  } else if (expr->right) {
+    if (!strcmp(expr->x, "-")) // (-a)' = - (a)'
+      return new Tree("-", get_diff(expr->right, var));
+    if (!strcmp(expr->x, "sin")) // (sin(a))' = cos(a') * a' ???
+      return new Tree(new Tree("cos", get_diff(expr->right, var)),
+		      "*", get_diff(expr->right, var));
+    // TODO  "sin"
   } else if (expr->left) {
     // TODO
-    // "-", what else?
-  } else if (expr->right) {
-    // TODO
-    // "!", what else?
+    // "!" with constants, what else?
   } else {
-    if (!strcmp(expr->x, x)) 
-      return Tree::copy(expr);
+    if (!strcmp(expr->x, var))
+      return new Tree("1");
     else
       return new Tree("0");
   }
