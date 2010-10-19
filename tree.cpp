@@ -16,6 +16,14 @@ public:
     right(right),
     x(x) {}
 
+  Tree(Tree* left, char* x) :
+    left(left),
+    x(x) {}
+
+  Tree(char* x, Tree* right) :
+    x(x),
+    right(right) {}
+
   Tree(char* x) :
     x(x) {}
 
@@ -25,15 +33,23 @@ public:
     cout << "\n";
   }
 
-  void print_rec(bool at_top) {
-    // print expression, represented by tree. Skip brackets if at_top is true
-    if (this->left && this->right) {
-      if (at_top)
+  void print_rec(bool brackets) {
+    // Print expression, represented by tree.
+    // include enclosing brackets only if brackets is true
+    if (this->left || this->right) {
+      if (brackets)
 	cout << "(";
-      this->left->print_rec(true);
-      cout << " " << this->x << " ";
-      this->right->print_rec(true);
-      if (at_top)
+      bool infix = this->left && this->right;
+      if (this->left) {
+	this->left->print_rec(true);
+	if (infix) cout << " ";
+      }
+      cout << this->x;
+      if (this->right) {
+	if (infix) cout << " ";
+	this->right->print_rec(true);
+      }
+      if (brackets)
 	cout << ")";
     } else
       cout << this->x;
@@ -45,6 +61,10 @@ public:
     strcpy(new_x, tree->x);
     if (tree->left && tree->right)
       return new Tree(Tree::copy(tree->left), new_x, Tree::copy(tree->right));
+    else if (tree->left)
+      return new Tree(Tree::copy(tree->left), new_x);
+    else if (tree->right)
+      return new Tree(new_x, Tree::copy(tree->right));
     else
       return new Tree(new_x);
   }

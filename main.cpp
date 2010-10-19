@@ -9,6 +9,14 @@ void test_print_and_copy() {
   tree->print();
   tree = new Tree(new Tree("x"), "*", new Tree(new Tree("4"), "+", new Tree("x")));
   tree->print();
+  tree = new Tree(new Tree("x"), "*",
+		  new Tree(new Tree(new Tree("7"), "/", new Tree("x")), "-",
+			   new Tree(new Tree("x"), "^", new Tree("x"))));
+  tree->print();
+  cout << "copy of tree: ";
+  Tree::copy(tree)->print();
+  tree = new Tree("-", new Tree(new Tree(new Tree("x"), "+", new Tree("7")), "!"));
+  tree->print();
   cout << "copy of tree: ";
   Tree::copy(tree)->print();
 }
