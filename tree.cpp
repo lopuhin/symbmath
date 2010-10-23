@@ -27,6 +27,10 @@ public:
   Tree(char* x) :
     x(x) {}
 
+  bool is_leaf() {
+    return !this->left && !this->right;
+  }
+
   void print() {
     // print expression, represented by tree
     print_rec(false);
