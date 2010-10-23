@@ -15,14 +15,14 @@ Tree* get_diff(Tree* expr, char* var) {
 			       "*", Tree::copy(expr->right)),
 		      "+", new Tree(Tree::copy(expr->left),
 				    "*", get_diff(expr->right, var)));
-    // TODO  "/" "^"
+    // TODO  "/" "^", "log"
   } else if (expr->right) {
     if (!strcmp(expr->x, "-")) // (-a)' = - (a)'
       return new Tree("-", get_diff(expr->right, var));
     if (!strcmp(expr->x, "sin")) // (sin(a))' = cos(a') * a' ???
       return new Tree(new Tree("cos", get_diff(expr->right, var)),
 		      "*", get_diff(expr->right, var));
-    // TODO  "sin"
+    // TODO  "sin", "exp"
   } else if (expr->left) {
     // TODO
     // "!" with constants, what else?

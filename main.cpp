@@ -2,6 +2,7 @@
 #include <iostream>
 #include "tree.cpp"
 #include "diff.cpp"
+#include "simplify.cpp"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ void test_diff(Tree** test_expr, int n_expr) {
     expr = test_expr[i];
     expr->print();
     cout << "diff = ";
-    get_diff(expr, "x")->print();
+    simplify(get_diff(expr, "x"))->print();
   }
   cout << endl;
 }
