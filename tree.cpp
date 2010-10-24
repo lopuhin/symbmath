@@ -73,4 +73,18 @@ public:
       return new Tree(new_x);
   }
 
+  bool equal_to(Tree* tree) {
+    if (strcmp(this->x, tree->x))
+      return false;
+    if (this->left) {
+      if (!(tree->left && this->left->equal_to(tree->left)))
+	return false;
+    }
+    if (this->right) {
+      if (!(tree->right && this->right->equal_to(tree->right)))
+	return false;
+    }
+    return true;
+  }
+
 };

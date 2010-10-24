@@ -7,20 +7,26 @@
 using namespace std;
 
 
-void test_print_and_copy(Tree** test_expr, int n_expr) {
+bool test_print_and_copy(Tree** test_expr, int n_expr) {
   Tree* expr;
   cout << "print and copy test:" << endl;
   for(int i = 0; i < n_expr; i++) {
     expr = test_expr[i];
     expr->print();
+    Tree* copy = Tree::copy(expr);
     cout << "copy of expression: ";
-    Tree::copy(expr)->print();
+    copy->print();
+    if (!copy->equal_to(expr)) {
+      cout << "not equal_to" << endl;
+      return false;
+    }
   }
   cout << endl;
+  return true;
 }
 
 
-void test_diff(Tree** test_expr, int n_expr) {
+bool test_diff(Tree** test_expr, int n_expr) {
   Tree* expr;
   cout << "diff test:" << endl;
   for(int i = 0; i < n_expr; i++) {
@@ -30,6 +36,7 @@ void test_diff(Tree** test_expr, int n_expr) {
     simplify(get_diff(expr, "x"))->print();
   }
   cout << endl;
+  return true;
 }
 
 
@@ -54,8 +61,13 @@ void test() {
 					"!"));
   int n_pc_tests = i; // end of print and copy tests
   
-  test_print_and_copy(test_expr, n_pc_tests);
-  test_diff(test_expr, n_diff_tests);
+  if (test_print_and_copy(test_expr, n_pc_tests) &&
+      test_diff(test_expr, n_diff_tests)) {
+    cout << "All tests passed"<< endl;
+  } else {
+    cout << "Error" << endl;
+  }
+  
 }
 
 
