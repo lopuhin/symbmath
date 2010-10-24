@@ -74,6 +74,7 @@ public:
   }
 
   bool equal_to(Tree* tree) {
+    // compare this to tree
     if (strcmp(this->x, tree->x))
       return false;
     if (this->left) {
@@ -87,4 +88,14 @@ public:
     return true;
   }
 
+  int n_nodes() {
+    // number of nodes in tree
+    int n_nodes = 1;
+    if (this->left)
+      n_nodes += this->left->n_nodes();
+    if (this->right)
+      n_nodes += this->right->n_nodes();
+    return n_nodes;
+  }
+  
 };
