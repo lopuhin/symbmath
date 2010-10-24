@@ -70,6 +70,9 @@ void test() {
   test_expr[i++] = new Tree(new Tree(new Tree("x"),
 				     "*", new Tree(new Tree("x"), "^", new Tree("7"))),
 			    "*", new Tree(new Tree("x"), "^", new Tree("5"))); 
+  test_expr[i++] = new Tree(new Tree(new Tree("x"),
+				     "-", new Tree(new Tree("x"), "*", new Tree("7"))),
+			    "-", new Tree(new Tree("x"), "*", new Tree("5"))); 
   test_expr[i++] = new Tree(new Tree("x"),
 			    "*", new Tree(new Tree(new Tree("7"), "/", new Tree("x")),
 					  "-", new Tree(new Tree("x"),
