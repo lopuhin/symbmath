@@ -13,7 +13,6 @@ int lexer(const char* input, Symbol* result) {
   regmatch_t pm;
   int error;
   if (regcomp(&re, pattern, REG_EXTENDED) != 0) {
-    cout << "error" << endl;
     return 0; // error
   }
   // this call to regexec() finds the first match on the line
@@ -25,8 +24,6 @@ int lexer(const char* input, Symbol* result) {
     // substring found between pm.rm_so and pm.rm_eo
     // this call to regexec() finds the next match
     token_start = input[pos + pm.rm_so];
-    cout << "match at " << pos + pm.rm_so << " " << pos + pm.rm_eo
-	 << " " << token_start << endl;
     switch(token_start) {
     case '(': token = LPAREN; break;
     case ')': token = RPAREN; break;
@@ -48,28 +45,33 @@ int lexer(const char* input, Symbol* result) {
   return token_index;
 }
 
+char* token_to_str(Symbol token) {
+  switch(token) {
+  case LPAREN: return "LPAREN";
+  case RPAREN: return "RPAREN";
+  case PLUS: return "PLUS";
+  case MINUS: return "MINUS";
+  case MULTIPLY: return "MULTIPLY";
+  case DIVIDE: return "DIVIDE";
+  case POWER: return "POWER";
+  case VARIABLE: return "VARIABLE";
+  case NUMBER: return "NUMBER";
+  }
+}
+
 void test_lexer(const char* input) {
   Symbol result[100];
   int n_tokens = lexer(input, result);
   for(int i = 0; i < n_tokens; i++) {
-    switch(result[i]) {
-    case LPAREN: cout << "LPAREN"; break;
-    case RPAREN: cout << "RPAREN"; break;
-    case PLUS: cout << "PLUS"; break;
-    case MINUS: cout << "MINUS"; break;
-    case MULTIPLY: cout << "MULTIPLY"; break;
-    case DIVIDE: cout << "DIVIDE"; break;
-    case POWER: cout << "POWER"; break;
-    case VARIABLE: cout << "VARIABLE"; break;
-    case NUMBER: cout << "NUMBER"; break;
-    }
-    cout << " ";
+    cout << token_to_str(result[i]) << " ";
   }
   cout << endl;
 }
   
 
+/*
 int main() {
   test_lexer("-12*35 + (sin(45) - 93*a + a_1_1 - _var7)^3");
   return 0;
 }
+*/
