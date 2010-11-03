@@ -9,22 +9,22 @@ class Tree {
 public:
   Tree* left;
   Tree* right;
-  char* x;
+  const char* x;
 
-  Tree(Tree* left, char* x, Tree* right) :
+  Tree(Tree* left, const char* x, Tree* right) :
     left(left),
     right(right),
     x(x) {}
 
-  Tree(Tree* left, char* x) :
+  Tree(Tree* left, const char* x) :
     left(left),
     x(x) {}
 
-  Tree(char* x, Tree* right) :
+  Tree(const char* x, Tree* right) :
     x(x),
     right(right) {}
 
-  Tree(char* x) :
+  Tree(const char* x) :
     x(x) {}
 
   bool is_leaf() {

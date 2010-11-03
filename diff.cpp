@@ -3,7 +3,7 @@
 using namespace std;
 
 
-Tree* get_diff(Tree* expr, char* var) {
+Tree* get_diff(Tree* expr, const char* var) {
   // Differentiate expression (create new expression) by given var
 
   // TODO recognize constant expressions!

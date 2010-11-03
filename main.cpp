@@ -56,6 +56,7 @@ void test() {
     // test everything
   Tree** test_expr = new Tree*[100];
   int i = 0;
+  test_expr[i++] = new Tree("x");
   test_expr[i++] = new Tree(new Tree("2"), "+", new Tree("x"));
   test_expr[i++] = new Tree(new Tree("x"), "*", new Tree("x"));
   test_expr[i++] = new Tree(new Tree("x"), "*",
@@ -93,5 +94,9 @@ void test() {
 
 
 int main() {
+  Tree* t = new Tree("x"); //getstring(strings));
+  cout << "bar";
+  t->print(); //->copy();
+  exit(0);
   test();
 }

@@ -6,7 +6,7 @@
 using namespace std;
 
 
-bool leaf_with_value(Tree* expr, char* value);
+bool leaf_with_value(Tree* expr, const char* value);
 bool leaf_number(Tree* expr);
 
 Tree* simplify(Tree* expr) {
@@ -22,7 +22,7 @@ Tree* simplify(Tree* expr) {
     Tree* simp_expr = new Tree(simplify(expr->left), new_x, simplify(expr->right));
     Tree* left = simp_expr->left;
     Tree* right = simp_expr->right;
-    char* x = simp_expr->x;
+    const char* x = simp_expr->x;
     if (!strcmp(x, "*")) { // multiplication
       if (leaf_number(left) && leaf_number(right)) { // calc constant
 	int value = atoi(left->x) * atoi(right->x);
@@ -102,7 +102,7 @@ Tree* simplify(Tree* expr) {
 }
 
 
-bool is_number(char* s) {
+bool is_number(const char* s) {
   // s is an integer number
   char c;
   int i = 0;
@@ -118,6 +118,6 @@ bool leaf_number(Tree* expr) {
   return expr->is_leaf() && is_number(expr->x);
 }
 
-bool leaf_with_value(Tree* expr, char* value) {
+bool leaf_with_value(Tree* expr, const char* value) {
   return expr->is_leaf() && !strcmp(expr->x, value);
 }
