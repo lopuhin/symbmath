@@ -1,3 +1,6 @@
+#ifndef TREE_CPP
+#define TREE_CPP
+
 #include <iostream>
 #include <string.h>
 
@@ -18,13 +21,17 @@ public:
 
   Tree(Tree* left, const char* x) :
     left(left),
+    right(NULL),
     x(x) {}
 
   Tree(const char* x, Tree* right) :
-    x(x),
-    right(right) {}
+    left(NULL),
+    right(right),
+    x(x) {}
 
   Tree(const char* x) :
+    left(NULL),
+    right(NULL),
     x(x) {}
 
   bool is_leaf() {
@@ -34,7 +41,7 @@ public:
   void print() {
     // print expression, represented by tree
     print_rec(false);
-    cout << "\n";
+    cout << endl;
   }
 
   void print_rec(bool brackets) {
@@ -99,3 +106,5 @@ public:
   }
   
 };
+
+#endif // TREE_CPP

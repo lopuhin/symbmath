@@ -1,3 +1,5 @@
+#include "tree.cpp"
+
 // Differentiating expressions
 
 using namespace std;

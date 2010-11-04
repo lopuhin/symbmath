@@ -6,7 +6,6 @@ using namespace std;
 typedef enum {VARIABLE, NUMBER, LPAREN, RPAREN,
 	      PLUS, MINUS, MULTIPLY, DIVIDE, POWER} Symbol;
 	      
-
 int lexer(const char* input, Symbol* result, char** result_strings) {
   // return number of tokens. Fill result with tokens,
   // and result_strings with corresponding strings
@@ -19,7 +18,8 @@ int lexer(const char* input, Symbol* result, char** result_strings) {
   }
   // this call to regexec() finds the first match on the line
   error = regexec(&re, input, 1, &pm, 0);
-  int pos = 0, token_index = 0, match_len;
+  int pos = 0, token_index = 0;
+  int match_len;
   Symbol token;
   char token_start;
   while (error == 0) {  // while matches found
@@ -66,6 +66,7 @@ const char* token_to_str(Symbol token) {
   case VARIABLE: return "VARIABLE";
   case NUMBER: return "NUMBER";
   }
+  return "unknown";
 }
 
 void test_lexer(const char* input) {
@@ -77,11 +78,3 @@ void test_lexer(const char* input) {
   }
   cout << endl;
 }
-  
-
-/*
-int main() {
-  test_lexer("-12*35 + (sin(45) - 93*a + a_1_1 - _var7)^3");
-  return 0;
-}
-*/
